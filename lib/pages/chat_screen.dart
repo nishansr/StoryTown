@@ -184,10 +184,13 @@ class _ChatPageState extends State<ChatPage> {
                       color: Color(0Xffc199cd),
                     ),
                   ),
-                  SizedBox(
-                    width: 90.0,
-                    child: Image.network(widget.profileurl),
+                  SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      myProfilePic!,
+                    ),
                   ),
+                  SizedBox(width: 10),
                   Text(
                     widget.name,
                     style: const TextStyle(

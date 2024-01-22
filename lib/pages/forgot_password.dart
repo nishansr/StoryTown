@@ -13,7 +13,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String email = "";
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController usermailcontroller = new TextEditingController();
+  TextEditingController usermailcontroller = TextEditingController();
 
   resetPassword() async {
     try {

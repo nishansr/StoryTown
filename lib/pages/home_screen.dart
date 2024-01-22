@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chat_app/pages/profile_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/pages/chat_screen.dart';
@@ -37,35 +38,38 @@ class _HomeState extends State<Home> {
     return StreamBuilder(
       stream: chatRoomsStream,
       builder: (context, AsyncSnapshot snapshot) {
-        print(snapshot.data);
+        print('snapshot: ${snapshot.data}');
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.data == null) {
+          return const Center(
+            child: Text(
+              'No text messages!',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black54,
+              ),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: snapshot.data.docs.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              DocumentSnapshot ds = snapshot.data.docs[index];
 
-        return snapshot.hasData
-            ? ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  print(ds.id);
-
-                  return ChatRoomListTile(
-                      chatRoomId: ds.id,
-                      lastMessage: ds["lastMessage"],
-                      myUsername: myUserName!,
-                      time: ds["lastMessageSendTs"]);
-                })
-            : (snapshot.connectionState != ConnectionState.waiting
-                ? const SizedBox(
-                    child: Center(
-                      child: Text(
-                        'No text messages!',
-                        style: TextStyle(fontSize: 24.0, color: Colors.black54),
-                      ),
-                    ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  ));
+              return ChatRoomListTile(
+                chatRoomId: ds.id,
+                lastMessage: ds["lastMessage"],
+                myUsername: myUserName!,
+                time: ds["lastMessageSendTs"],
+              );
+            },
+          );
+        }
       },
     );
   }
@@ -152,13 +156,32 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w500,
                           ),
                         ))
-                      : const Text(
-                          "StoryTown",
-                          style: TextStyle(
-                            color: Color(0Xffc199cd),
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      : Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const ProfileScreen(),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.manage_accounts_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "StoryTown",
+                              style: TextStyle(
+                                color: Color(0Xffc199cd),
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                   GestureDetector(
                     onTap: () {
@@ -254,14 +277,11 @@ class _HomeState extends State<Home> {
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
             child: Row(
               children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(60),
-                    child: Image.network(
-                      data["Photo"],
-                      height: 70,
-                      width: 70,
-                      fit: BoxFit.cover,
-                    )),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    data['Photo'],
+                  ),
+                ),
                 const SizedBox(
                   width: 20.0,
                 ),
@@ -349,19 +369,16 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
       child: Container(
         margin: const EdgeInsets.only(bottom: 10.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            profilePicUrl == ""
-                ? const CircularProgressIndicator()
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(60),
-                    child: Image.network(
-                      profilePicUrl,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.cover,
+            SizedBox(
+              child: profilePicUrl == ""
+                  ? const CircularProgressIndicator()
+                  : CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        profilePicUrl,
+                      ),
                     ),
-                  ),
+            ),
             const SizedBox(
               width: 10.0,
             ),
@@ -371,12 +388,16 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                Text(
-                  username,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w500),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    username,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2,

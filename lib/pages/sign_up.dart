@@ -43,7 +43,7 @@ class _SignUpState extends State<SignUp> {
           "username": updateusername.toUpperCase(),
           "SearchKey": firstletter,
           "Photo":
-              "https://firebasestorage.googleapis.com//b/barberapp-ebcc1.appspot.com/o/icon1.png?alt=media&token=0fad24a5-a01b-4d67-b4a0-676fbc75b34a",
+              "https://assets-global.website-files.com/62bdc93e9cccfb43e155104c/654f7e7c694b77bb4600eed3_Luffy%2520PFP%2520for%2520Tiktok%25205.png",
           "Id": Id,
         };
         await DatabaseMethods().addUserDetails(userInfoMap, Id);

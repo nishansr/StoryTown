@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/forgot_password.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox(
         child: Stack(
           children: [
@@ -202,27 +204,37 @@ class _SignInState extends State<SignIn> {
                                     return null;
                                   },
                                   decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      prefixIcon: Icon(
-                                        Icons.password,
-                                        color: Color(0xFF7f30fe),
-                                      )),
+                                    border: InputBorder.none,
+                                    prefixIcon: Icon(
+                                      Icons.password,
+                                      color: Color(0xFF7f30fe),
+                                    ),
+                                  ),
                                   obscureText: true,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 10.0,
+                              const SizedBox(height: 10.0),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const ForgotPassword(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.bottomRight,
+                                  child: const Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              // Container(
-                              //   alignment: Alignment.bottomRight,
-                              //   child: const Text(
-                              //     "Forgot Password?",
-                              //     style: TextStyle(
-                              //         color: Colors.black,
-                              //         fontSize: 16.0,
-                              //         fontWeight: FontWeight.w500),
-                              //   ),
-                              // ),
                               const SizedBox(
                                 height: 50.0,
                               ),

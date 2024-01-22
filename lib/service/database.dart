@@ -67,9 +67,11 @@ class DatabaseMethods {
   }
 
   Future<QuerySnapshot> getUserInfo(String username) async {
+    String? myUsername = await SharedPreferenceHelper().getUserName();
+
     return await FirebaseFirestore.instance
         .collection("users")
-        .where("username", isEqualTo: username)
+        .where("username", isEqualTo: myUsername!)
         .get();
   }
 
