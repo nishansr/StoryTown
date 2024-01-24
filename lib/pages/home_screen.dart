@@ -38,7 +38,6 @@ class _HomeState extends State<Home> {
     return StreamBuilder(
       stream: chatRoomsStream,
       builder: (context, AsyncSnapshot snapshot) {
-        print('snapshot: ${snapshot.data}');
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
