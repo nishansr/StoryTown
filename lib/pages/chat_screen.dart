@@ -6,6 +6,7 @@ import 'package:chat_app/service/database.dart';
 import 'package:chat_app/service/shared_pref.dart';
 import 'package:random_string/random_string.dart';
 
+// ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   String name, profileurl, username;
 
@@ -150,9 +151,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF553370),
-      body: Container(
+    return SingleChildScrollView(
+      child: Container(
         padding: const EdgeInsets.only(top: 60.0),
         child: Stack(
           children: [

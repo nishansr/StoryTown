@@ -1,8 +1,8 @@
 import 'package:chat_app/pages/forgot_password.dart';
+import 'package:chat_app/pages/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/pages/home_screen.dart';
 import 'package:chat_app/pages/sign_up.dart';
 import 'package:chat_app/service/database.dart';
 import 'package:chat_app/service/shared_pref.dart';

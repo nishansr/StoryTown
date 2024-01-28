@@ -1,7 +1,7 @@
+import 'package:chat_app/pages/home_screen.dart';
 import 'package:chat_app/pages/sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:chat_app/pages/home_screen.dart';
 import 'package:chat_app/service/database.dart';
 import 'package:chat_app/service/shared_pref.dart';
 import 'package:random_string/random_string.dart';
@@ -26,6 +26,7 @@ class _SignUpState extends State<SignUp> {
   registration() async {
     if (password == confirmPassword) {
       try {
+        // ignore: unused_local_variable
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
