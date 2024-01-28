@@ -1,15 +1,14 @@
 import 'package:chat_app/pages/home_screen.dart';
+import 'package:chat_app/service/database.dart';
+import 'package:chat_app/service/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:chat_app/service/database.dart';
-import 'package:chat_app/service/shared_pref.dart';
 import 'package:random_string/random_string.dart';
 
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   String name, profileurl, username;
-
   ChatPage({
     super.key,
     required this.name,
@@ -62,30 +61,32 @@ class _ChatPageState extends State<ChatPage> {
           sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Flexible(
-            child: Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(24),
-                  bottomRight: sendByMe
-                      ? const Radius.circular(0)
-                      : const Radius.circular(24),
-                  topRight: const Radius.circular(24),
-                  bottomLeft: sendByMe
-                      ? const Radius.circular(24)
-                      : const Radius.circular(0)),
-              color: sendByMe
-                  ? const Color.fromARGB(255, 234, 236, 240)
-                  : const Color.fromARGB(255, 211, 228, 243)),
-          child: Text(
-            message,
-            style: const TextStyle(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(24),
+                    bottomRight: sendByMe
+                        ? const Radius.circular(0)
+                        : const Radius.circular(24),
+                    topRight: const Radius.circular(24),
+                    bottomLeft: sendByMe
+                        ? const Radius.circular(24)
+                        : const Radius.circular(0)),
+                color: sendByMe
+                    ? const Color.fromARGB(255, 234, 236, 240)
+                    : const Color.fromARGB(255, 211, 228, 243)),
+            child: Text(
+              message,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 15.0,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
-        )),
+        ),
       ],
     );
   }
@@ -151,8 +152,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
+    return Scaffold(
+      backgroundColor: const Color(0xFF553370),
+      body: Container(
         padding: const EdgeInsets.only(top: 60.0),
         child: Stack(
           children: [
@@ -175,7 +177,7 @@ class _ChatPageState extends State<ChatPage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const Home(),
+                          builder: (context) => const Home(),
                         ),
                       );
                     },
@@ -184,13 +186,13 @@ class _ChatPageState extends State<ChatPage> {
                       color: Color(0Xffc199cd),
                     ),
                   ),
-                  SizedBox(width: 10),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      myProfilePic!,
+                  SizedBox(
+                    width: 50.0,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(widget.profileurl),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10.0),
                   Text(
                     widget.name,
                     style: const TextStyle(

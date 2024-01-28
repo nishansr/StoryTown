@@ -15,7 +15,16 @@ class MusicPlayer extends StatelessWidget {
               height: 250,
               width: 200,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(5)),
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  'assets/living.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -33,21 +42,24 @@ class MusicPlayer extends StatelessWidget {
                 color: Colors.black87,
               ),
             ),
-            Slider(value: 0, onChanged: (value) {}),
+            Slider(
+              value: 0,
+              onChanged: (value) {},
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '00:00',
+                    '00.00',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black54,
                     ),
                   ),
                   Text(
-                    '00:00',
+                    '00.00',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black54,
@@ -71,20 +83,22 @@ class MusicPlayer extends StatelessWidget {
                   backgroundColor: Colors.black,
                   child: Center(
                     child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                          size: 35,
-                        )),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 35,
+                      ),
+                    ),
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.skip_next,
-                      size: 45,
-                    )),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.skip_next,
+                    size: 45,
+                  ),
+                ),
               ],
             ),
           ],
