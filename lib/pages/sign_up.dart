@@ -298,9 +298,6 @@ class _SignUpState extends State<SignUp> {
                                     obscureText: true,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 30.0,
-                                ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

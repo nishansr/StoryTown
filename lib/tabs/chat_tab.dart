@@ -94,13 +94,19 @@ class _ChatState extends State<Chat> {
                   right: 18.0,
                   bottom: 10,
                 ),
-                child: Text(
-                  "Chats",
-                  style: TextStyle(
-                    color: Color(0Xffc199cd),
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Chats",
+                      style: TextStyle(
+                        color: Color(0Xffc199cd),
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(),
+                  ],
                 ),
               ),
               Container(

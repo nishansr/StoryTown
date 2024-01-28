@@ -39,6 +39,7 @@ class _SignInState extends State<SignIn> {
       await SharedPreferenceHelper().saveUserId(id);
       await SharedPreferenceHelper().saveUserPic(pic);
 
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -236,7 +237,7 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 50.0,
+                                height: 25,
                               ),
                               GestureDetector(
                                 onTap: () {

@@ -1,9 +1,11 @@
 import 'package:chat_app/pages/home_screen.dart';
 import 'package:chat_app/service/database.dart';
+import 'package:chat_app/service/notification_service.dart';
 import 'package:chat_app/service/shared_pref.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:random_string/random_string.dart';
 
 // ignore: must_be_immutable
@@ -21,9 +23,42 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   TextEditingController messagecontroller = TextEditingController();
   String? myUserName, myProfilePic, myName, myEmail, messageId, chatRoomId;
   Stream? messageStream;
+
+  void initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+    );
+  }
+
+  void showNotification(String message) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'your_channel_id', // Change this to a unique channel ID
+      'Your Channel Name', // Change this to a unique channel name
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'New Message', // Notification title
+      message, // Notification body
+      platformChannelSpecifics,
+    );
+  }
 
   getthesharedpref() async {
     myUserName = await SharedPreferenceHelper().getUserName();
@@ -138,6 +173,7 @@ class _ChatPageState extends State<ChatPage> {
         };
         DatabaseMethods()
             .updateLastMessageSend(chatRoomId!, lastMessageInfoMap);
+
         if (sendClicked) {
           messageId = null;
         }

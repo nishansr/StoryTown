@@ -125,7 +125,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 50.0,
+                                height: 25,
                               ),
                               GestureDetector(
                                 onTap: () {
@@ -178,7 +178,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const SignUp(),
